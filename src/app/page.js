@@ -76,7 +76,7 @@ export default function Home() {
   }, [router]);
 
   if (isChecking) {
-    return <div>Loading...</div>;
+    return <span className="loading loading-ring loading-lg"></span>;
   }
 
   return (

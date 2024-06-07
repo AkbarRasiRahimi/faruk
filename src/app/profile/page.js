@@ -1,7 +1,15 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 export default function Profile() {
+  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const router = useRouter();
+  if (!token) {
+    router.push("/");
+  }
   return (
-    <section className="w-screen flex justify-center items-start h-fit py-20 bg-base-100 ">
-      <div className="flex flex-col w-screen h-screen justify-center bg-base-100 md:flex-row md:space-x-6 pb-20">
+    <section className="w-screen flex justify-center items-start h-screen py-20 bg-base-100 ">
+      <div className="flex flex-col w-screen h-fit justify-center items-center bg-base-100 md:flex-row md:items-start md:space-x-6 pb-20 gap-2">
         <div className="w-full max-w-md p-6 bg-base-200 md:w-1/2 rounded-lg h-fit">
           <h1 className="text-2xl font-bold mb-6">Profil Bilgileri</h1>
           <label className="label mb-2 text-neutral-content">Username:</label>
@@ -59,7 +67,7 @@ export default function Profile() {
             placeholder="Bölüm"
           />
         </div>
-        <div className="w-full max-w-md p-6 bg-base-200 md:w-1/2 h-fit pb-10 rounded-lg">
+        <div className="w-full max-w-md p-6 bg-base-200 md:w-1/2 h-fit rounded-lg">
           <label className="label mb-2 text-neutral-content">Sinif:</label>
           <input
             type="text"
@@ -129,7 +137,7 @@ export default function Profile() {
             className="input input-bordered input-primary input-sm w-full bg-transparent text-neutral-content"
             placeholder="Hobiler"
           />
-          <button className="btn btn-primary w-full mt-10 mb-20">Profili Kaydet</button>
+          <button className="btn btn-primary w-full mt-10">Profili Kaydet</button>
         </div>
       </div>
     </section>
