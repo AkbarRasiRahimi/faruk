@@ -1,9 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
 import Toast from "../../../components/toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function LoginCompany() {
   const [username, setUsername] = useState("");
@@ -13,7 +16,7 @@ export default function LoginCompany() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:5010/api/users/login", {
+    const response = await fetch(`${apiUrl}/api/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
