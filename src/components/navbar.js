@@ -19,7 +19,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className="navbar bg-secondary-content fixed top-0 z-10">
+    <div className="navbar bg-secondary fixed top-0 z-10">
       <div className="navbar-start">
         <Link href="/" className="btn btn-ghost">
           Anasayfa

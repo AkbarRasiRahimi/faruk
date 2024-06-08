@@ -83,11 +83,11 @@ export default function Home() {
     <section className="w-screen flex justify-center py-20 bg-base-100 ">
       <div className="w-screen grid grid-cols-1 gap-4 lg:grid-cols-3 px-10  max-w-[1200px]">
         {dummyData.map((item, index) => (
-          <div key={index} className="card shadow-xl w-full bg-primary-content">
+          <div key={index} className="card shadow-xl w-full bg-primary">
             <div className="card-body">
               <h2 className="card-title">{item.title}</h2>
               <p>{item.content}</p>
-              <button className="btn btn-primary max-w-52 m-auto mt-5">{item.btnText}</button>
+              <button className="btn btn-secondary max-w-52 m-auto mt-5">{item.btnText}</button>
             </div>
           </div>
         ))}

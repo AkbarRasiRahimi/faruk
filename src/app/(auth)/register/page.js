@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Toast from "../../../components/toast";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -10,10 +11,13 @@ export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [toastMessage, setToastMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const response = await fetch("http://localhost:5010/api/users/register", {
       method: "POST",
       headers: {
@@ -31,12 +35,15 @@ export default function Register() {
       setToastMessage("Successfully registered !");
       setTimeout(() => {
         setToastMessage("");
-        router.refresh("/");
+        router.push("/login");
+        setLoading(false);
       }, 3000);
     } else {
-      setToastMessage("Invalid email or password");
+      const data = await response.json();
+      setToastMessage(data.error);
       setTimeout(() => {
         setToastMessage("");
+        setLoading(false);
       }, 3000);
     }
   };
@@ -93,8 +100,8 @@ export default function Register() {
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary btn-sm w-full mt-4">
-              Kayıt Ol
+            <button type="submit" className="btn btn-primary btn-sm w-full mt-4" disabled={loading}>
+              {loading ? <span className="loading loading-ring loading-sm"></span> : "Kayıt Ol"}
             </button>
           </form>
           <p className="mt-4 text-center">

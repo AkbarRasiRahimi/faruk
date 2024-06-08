@@ -17,7 +17,7 @@ function RootLayout({ children }) {
   }, []);
 
   return (
-    <html lang="en" data-theme="winter">
+    <html lang="en" data-theme="business">
       <body className={`${inter.className}`}>
         {isClient ? (
           <>

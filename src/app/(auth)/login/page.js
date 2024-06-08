@@ -12,9 +12,12 @@ export default function LoginCompany() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [toastMessage, setToastMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
 
     const response = await fetch(`${apiUrl}/api/users/login`, {
       method: "POST",
@@ -31,16 +34,19 @@ export default function LoginCompany() {
       setToastMessage("Successfully logged in!");
       const data = await response.json();
       const token = data.accessToken;
-      console.log(token);
+
       setTimeout(() => {
         setToastMessage("");
+        setLoading(false);
         localStorage.setItem("token", token);
         window.location.reload("/");
       }, 3000);
     } else {
-      setToastMessage("Invalid email or password");
+      const data = await response.json();
+      setToastMessage(data.message);
       setTimeout(() => {
         setToastMessage("");
+        setLoading(false);
       }, 3000);
     }
   };
@@ -80,8 +86,8 @@ export default function LoginCompany() {
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary btn-sm w-full mt-4">
-              Giriş Yap
+            <button type="submit" className="btn btn-primary btn-sm w-full mt-4" disabled={loading}>
+              {loading ? <span className="loading loading-ring loading-sm"></span> : "Giriş Yap"}
             </button>{" "}
           </form>
           <p className="mt-4 text-center">
