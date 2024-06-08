@@ -6,29 +6,33 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function LoginCompany() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [toastMessage, setToastMessage] = useState("");
   const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("/api/users/register", {
+    const response = await fetch("http://localhost:5010/api/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email,
+        username,
         password,
       }),
     });
 
     if (response.ok) {
       setToastMessage("Successfully logged in!");
+      const data = await response.json();
+      const token = data.accessToken;
+      console.log(token);
       setTimeout(() => {
         setToastMessage("");
-        window.location.reload();
+        localStorage.setItem("token", token);
+        window.location.reload("/");
       }, 3000);
     } else {
       setToastMessage("Invalid email or password");
@@ -38,11 +42,11 @@ export default function LoginCompany() {
     }
   };
 
-  const onSubmitTest = async (e) => {
-    localStorage.setItem("token", "test");
-    router.replace("/");
-     router.refresh("/");
-  };
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      router.push("/");
+    }
+  }, []);
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center bg-neutral-focus">
@@ -54,9 +58,9 @@ export default function LoginCompany() {
             <div className="form-control">
               <label className="label mb-2 text-neutral-content">Kullanıcı Adı</label>
               <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="input input-bordered input-primary input-sm w-full bg-transparent text-neutral-content"
                 placeholder="Kullanıcı Adı"
                 required
@@ -76,9 +80,6 @@ export default function LoginCompany() {
             <button type="submit" className="btn btn-primary btn-sm w-full mt-4">
               Giriş Yap
             </button>{" "}
-            <button onClick={onSubmitTest} className="btn btn-primary btn-sm w-full mt-4">
-              Deneyim
-            </button>
           </form>
           <p className="mt-4 text-center">
             Hala aramıza katılmadın mı?{" "}

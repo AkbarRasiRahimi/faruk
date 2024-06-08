@@ -6,28 +6,32 @@ import Link from "next/link";
 
 export default function Register() {
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("intern");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [toastMessage, setToastMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("/api/users/register", {
+    const response = await fetch("http://localhost:5010/api/users/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email,
+        role,
+        username,
         password,
       }),
     });
 
     if (response.ok) {
-      setToastMessage("Successfully logged in!");
+      setToastMessage("Successfully registered !");
       setTimeout(() => {
         setToastMessage("");
-        router.push("/");
+        router.refresh("/");
       }, 3000);
     } else {
       setToastMessage("Invalid email or password");
@@ -47,8 +51,8 @@ export default function Register() {
               <label className="label mb-2 text-neutral-content">Kullanıcı Adınız*</label>
               <input
                 type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="input input-bordered input-primary input-sm w-full bg-transparent text-neutral-content"
                 placeholder="Kullanıcı Adınız"
                 required
@@ -68,8 +72,7 @@ export default function Register() {
             <div className="form-control mt-2">
               <label className="label mb-2 text-neutral-content">Kullanıcı Türü Seçiniz*</label>
               <select
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setRole(e.target.value)}
                 className="select select-bordered select-primary select-sm w-full bg-transparent text-neutral-content"
                 required>
                 <option value="" disabled>
