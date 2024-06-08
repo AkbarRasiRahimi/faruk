@@ -67,7 +67,7 @@ export default function Home() {
     if (typeof window !== "undefined") {
       const storedToken = localStorage.getItem("token");
       if (!storedToken) {
-        router.push("/welcome");
+        router.push("/login");
       } else {
         setToken(storedToken);
       }

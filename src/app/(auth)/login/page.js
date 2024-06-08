@@ -3,12 +3,13 @@
 import { useState, useEffect } from "react";
 import Toast from "../../../components/toast";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function Login() {
+export default function LoginCompany() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [toastMessage, setToastMessage] = useState("");
-
+  const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -27,7 +28,7 @@ export default function Login() {
       setToastMessage("Successfully logged in!");
       setTimeout(() => {
         setToastMessage("");
-        router.push("/");
+        window.location.reload();
       }, 3000);
     } else {
       setToastMessage("Invalid email or password");
@@ -35,6 +36,12 @@ export default function Login() {
         setToastMessage("");
       }, 3000);
     }
+  };
+
+  const onSubmitTest = async (e) => {
+    localStorage.setItem("token", "test");
+    router.replace("/");
+     router.refresh("/");
   };
 
   return (
@@ -68,6 +75,9 @@ export default function Login() {
             </div>
             <button type="submit" className="btn btn-primary btn-sm w-full mt-4">
               Giriş Yap
+            </button>{" "}
+            <button onClick={onSubmitTest} className="btn btn-primary btn-sm w-full mt-4">
+              Deneyim
             </button>
           </form>
           <p className="mt-4 text-center">
