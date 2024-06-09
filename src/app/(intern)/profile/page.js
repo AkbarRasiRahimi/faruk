@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { HiPlus } from "react-icons/hi";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-import { useGlobalState } from "../../store/global";
-import Loading from "../../components/loading";
+import { useGlobalState } from "../../../store/global";
+import Loading from "../../../components/loading";
 
 export default function Profile() {
   const { isLoggedIn, isLoading } = useGlobalState();
@@ -43,6 +43,7 @@ export default function Profile() {
 
   useEffect(() => {
     const fetchProfile = async () => {
+      if(!token) return;
       try {
         const response = await fetch(`${apiUrl}/api/users/profile`, {
           method: "GET",

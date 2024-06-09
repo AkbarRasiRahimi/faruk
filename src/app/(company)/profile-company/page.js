@@ -2,14 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Toast from "../../components/toast";
+import Toast from "../../../components/toast";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-import { useGlobalState } from "../../store/global";
-import Loading from "../../components/loading";
+import { useGlobalState } from "../../../store/global";
+import Loading from "../../../components/loading";
 
 export default function Profile() {
-  const { isLoggedIn, isLoading } = useGlobalState();
+  const { isLoggedIn, isLoading, token } = useGlobalState();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -23,8 +23,6 @@ export default function Profile() {
 
   const [toastMessage, setToastMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
   const router = useRouter();
 
   if (!token) {
@@ -85,7 +83,6 @@ export default function Profile() {
       sector: formData.sector,
     };
 
-    console.log(payload);
     setLoading(true);
     try {
       const response = await fetch(`${apiUrl}/api/users/company-profile`, {

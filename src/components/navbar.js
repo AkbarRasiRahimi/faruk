@@ -51,13 +51,13 @@ const Navbar = () => {
       ) : (
         <div className="navbar-start flex justify-between w-full ">
           <div>
-            <Link href="/" className="btn btn-ghost">
+            <Link href="/create" className="btn btn-ghost">
               İlan Oluştur
             </Link>
-            <Link href="/apply" className="btn btn-ghost">
+            <Link href="/show" className="btn btn-ghost">
               İlanları Görüntüle
             </Link>
-            <Link href="/internship" className="btn btn-ghost">
+            <Link href="/interns" className="btn btn-ghost">
               Stajyerler
             </Link>
           </div>
