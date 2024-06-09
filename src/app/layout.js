@@ -11,7 +11,7 @@ import "./globals.css";
 
 function RootLayout({ children }) {
   return (
-    <html lang="en" data-theme="business">
+    <html lang="en" data-theme="pastel">
       <body className={`${inter.className}`}>
         <GlobalStateProvider>
           {children}

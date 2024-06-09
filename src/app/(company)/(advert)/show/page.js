@@ -4,23 +4,23 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { useGlobalState } from "../../../../store/global";
+import Loading from "../../../../components/loading";
 
 export default function Apply() {
-  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
-  const router = useRouter();
+  const { token, setIsLoading, isLoading } = useGlobalState();
   const [adverts, setAdverts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    if (!token) {
-      router.push("/");
-    } else {
+    if (token) {
       fetchAdverts();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, router]);
+  }, [token]);
 
   const fetchAdverts = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch(`${apiUrl}/api/adverts/own`, {
         method: "GET",
@@ -34,10 +34,10 @@ export default function Apply() {
       } else {
         setAdverts([]);
       }
-      setLoading(false);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching adverts:", error);
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -49,15 +49,15 @@ export default function Apply() {
     router.push(`/advert/${id}/applicants`);
   };
 
-  if (!token) {
-    return null; // or a loading spinner
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
-    <section className="w-screen flex justify-center items-start h-screen py-20 bg-info">
+    <div className="w-screen flex justify-center items-start h-screen py-20 bg-info">
       <div className="overflow-x-auto">
         <h1 className="text-2xl font-bold mb-6">İlanları Görüntüle</h1>
-        {loading ? (
+        {isLoading ? (
           <p>Loading...</p>
         ) : adverts.length === 0 ? (
           <p>No adverts available.</p>
@@ -93,6 +93,6 @@ export default function Apply() {
           </table>
         )}
       </div>
-    </section>
+    </div>
   );
 }

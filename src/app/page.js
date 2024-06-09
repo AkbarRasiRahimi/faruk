@@ -117,7 +117,9 @@ const Modal = ({ show, onClose, children }) => {
   ) : null;
 };
 
+// eslint-disable-next-line react/display-name
 Modal.Title = ({ children }) => <h2 className="text-2xl font-bold mb-2">{children}</h2>;
+// eslint-disable-next-line react/display-name
 Modal.Content = ({ children }) => (
   <ul className="mb-4 list-disc list-inside">
     {children.map((child, index) => (
@@ -125,6 +127,7 @@ Modal.Content = ({ children }) => (
     ))}
   </ul>
 );
+// eslint-disable-next-line react/display-name
 Modal.Action = ({ onClick, passive, children }) => (
   <button
     className={`${passive ? "text-gray-500" : "text-blue-500"} text-sm font-bold uppercase hover:underline`}

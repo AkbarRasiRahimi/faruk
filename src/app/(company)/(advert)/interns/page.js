@@ -1,25 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { useGlobalState } from "../../../../store/global";
+import Loading from "../../../../components/loading";
 
 export default function Apply() {
-  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
-  const router = useRouter();
-  const [applications, setapplications] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { token, setIsLoading, isLoading } = useGlobalState();
+  const [applications, setApplications] = useState([]);
 
   useEffect(() => {
-    if (!token) {
-      router.push("/");
-    } else {
-      fetchapplications();
+    if (token) {
+      fetchApplications();
     }
-  }, [token, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
-  const fetchapplications = async () => {
+  const fetchApplications = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch(`${apiUrl}/api/applications/own`, {
         method: "GET",
@@ -29,34 +28,34 @@ export default function Apply() {
       });
       const data = await response.json();
       if (data.response) {
-        setapplications(data.applications);
+        setApplications(data.applications);
       } else {
-        setapplications([]);
+        setApplications([]);
       }
-      setLoading(false);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching applications:", error);
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   const handleViewAdvert = (id) => {
-    router.push(`/advert/${id}`);
+    router.push(`/applications/${id}`);
   };
 
   const handleViewApplicants = (id) => {
-    router.push(`/advert/${id}/applicants`);
+    router.push(`/applications/${id}/applicants`);
   };
 
-  if (!token) {
-    return null; // or a loading spinner
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
     <section className="w-screen flex justify-center items-start h-screen py-20 bg-info">
       <div className="overflow-x-auto">
-        <h1 className="text-2xl font-bold mb-6">İlanları Görüntüle</h1>
-        {loading ? (
+        <h1 className="text-2xl font-bold mb-6">İlana Başvuranlar</h1>
+        {isLoading ? (
           <p>Loading...</p>
         ) : applications.length === 0 ? (
           <p>No applications available.</p>
@@ -66,9 +65,10 @@ export default function Apply() {
             <thead>
               <tr>
                 <th>#</th>
-                <th>İlanın İsmi</th>
-                <th>İlanı Görüntüle</th>
-                <th>İlana Başvuranlar</th>
+                <th>Adayın İsmi</th>
+                <th>Adayın Soysismi</th>
+                <th>Adayın Eşleşme Skoru</th>
+                <th>İşlem</th>
               </tr>
             </thead>
             <tbody>
