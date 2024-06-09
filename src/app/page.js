@@ -1,8 +1,4 @@
 "use client";
-
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-
 const dummyData = [
   {
     title: "SOFTWARE DESIGN ENGINEER INTERNSHIP",
@@ -57,26 +53,23 @@ const dummyData = [
     btnText: "Kolay Başvuru",
   },
 ];
+import { useGlobalState } from "../store/global";
+import Loading from "../components/loading";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [token, setToken] = useState(null);
-  const [isChecking, setIsChecking] = useState(true);
+  const { isLoading, isLoggedIn } = useGlobalState();
   const router = useRouter();
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedToken = localStorage.getItem("token");
-      if (!storedToken) {
-        router.push("/login");
-      } else {
-        setToken(storedToken);
-      }
-      setIsChecking(false);
+    if (!isLoggedIn) {
+      router.push("/login");
     }
-  }, [router]);
+  }, [isLoggedIn, router]);
 
-  if (isChecking) {
-    return <span className="loading loading-ring loading-lg"></span>;
+  if (isLoading || !isLoggedIn) {
+    return <Loading />;
   }
 
   return (
@@ -95,4 +88,3 @@ export default function Home() {
     </section>
   );
 }
-
