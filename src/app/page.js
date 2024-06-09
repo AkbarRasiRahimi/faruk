@@ -1,65 +1,17 @@
 "use client";
-const dummyData = [
-  {
-    title: "SOFTWARE DESIGN ENGINEER INTERNSHIP",
-    content:
-      "KLorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin, libero sit amet tincidunt placerat, purus nulla tincidunt lorem, sit amet mollis sem nibh in urna. Mauris nec finibus felis. Mauris id faucibus nulla, eu egestas neque. Maecenas sed ante erat. Nunc aliquam ante vitae urna tincidunt sollicitudin. Fusce et hendrerit erat, eu malesuada felis. Nam convallis lacinia lectus, sit amet accumsan erat tristique sit amet. Nulla mollis lectus quam, id lobortis nisl pulvinar elementum. Pellentesque sed nunc risus. Sed placerat nunc non augue vulputate, non facilisis ante mollis. Suspendisse sollicitudin scelerisque tortor, a efficitur neque aliquam vel. Vivamus nec justo eget ipsum porttitor scelerisque quis vitae diam. Vestibulum ut nunc dolor. Vestibulum semper vel lorem ut facilisis. Suspendisse iaculis elit quis arcu dapibus elementum.",
-    btnText: "Kolay Başvuru",
-  },
-  {
-    title: "Another card",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    btnText: "Kolay Başvuru",
-  },
-  {
-    title: "SOFTWARE DESIGN ENGINEER INTERNSHIP",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    btnText: "Kolay Başvuru",
-  },
-  {
-    title: "Another card",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    btnText: "Kolay Başvuru",
-  },
-  ,
-  {
-    title: "SOFTWARE DESIGN ENGINEER INTERNSHIP",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    btnText: "Kolay Başvuru",
-  },
-  {
-    title: "Another card",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    btnText: "Kolay Başvuru",
-  },
-  {
-    title: "SOFTWARE DESIGN ENGINEER INTERNSHIP",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    btnText: "Kolay Başvuru",
-  },
-  {
-    title: "Another card",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    btnText: "Kolay Başvuru",
-  },
-  {
-    title: "SOFTWARE DESIGN ENGINEER INTERNSHIP",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    btnText: "Kolay Başvuru",
-  },
-  {
-    title: "Another card",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    btnText: "Kolay Başvuru",
-  },
-];
+
 import { useGlobalState } from "../store/global";
 import Loading from "../components/loading";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 export default function Home() {
-  const { isLoading, isLoggedIn } = useGlobalState();
+  const { isLoading, isLoggedIn, token } = useGlobalState();
+  const [adverts, setAdverts] = useState([]);
+  const [modalContent, setModalContent] = useState({ show: false, title: "", content: "" });
+
   const router = useRouter();
 
   useEffect(() => {
@@ -68,23 +20,114 @@ export default function Home() {
     }
   }, [isLoggedIn, router]);
 
+  useEffect(() => {
+    const fetchAdverts = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/api/adverts`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setAdverts(data.adverts);
+        } else {
+          console.error("Error fetching adverts", await response.json());
+        }
+      } catch (error) {
+        console.error("Error fetching adverts", error);
+      }
+    };
+    fetchAdverts();
+  }, [token]);
+
   if (isLoading || !isLoggedIn) {
     return <Loading />;
   }
 
+  const handleModal = (title, content) => {
+    setModalContent({ show: true, title, content });
+  };
+
+  const closeModal = () => {
+    setModalContent({ show: false, title: "", content: "" });
+  };
+
   return (
-    <section className="w-screen flex justify-center py-20 bg-base-100 ">
-      <div className="w-screen grid grid-cols-1 gap-4 lg:grid-cols-3 px-10  max-w-[1200px]">
-        {dummyData.map((item, index) => (
-          <div key={index} className="card shadow-xl w-full bg-primary">
+    <section className="w-screen flex justify-center py-20 bg-base-100">
+      <div className="w-screen grid grid-cols-1 gap-4 lg:grid-cols-3 px-10 max-w-[1200px]">
+        {adverts.map((item) => (
+          <div key={item.id} className="card shadow-xl w-full bg-primary">
             <div className="card-body">
-              <h2 className="card-title">{item.title}</h2>
-              <p>{item.content}</p>
-              <button className="btn btn-secondary max-w-52 m-auto mt-5">{item.btnText}</button>
+              <h2 className="card-title text-accent-content">{item.title}</h2>
+              <span className="font-bold flex justify-between items-end">{item.field}<upper className="font-normal text-xs pl-2 text-warning" >{item.department}</upper></span>
+              
+              {item.requirements.length > 0 && (
+                <button onClick={() => handleModal("Info Requirements", item.requirements)} className="btn btn-info ">
+                  Info Requirements
+                </button>
+              )}
+              {item.foreignLanguages.length > 0 && (
+                <button
+                  onClick={() => handleModal("Foreign Languages", item.foreignLanguages)}
+                  className="btn btn-info ">
+                  Foreign Languages
+                </button>
+              )}
             </div>
           </div>
         ))}
       </div>
+      <Modal show={modalContent.show} onClose={closeModal}>
+        <Modal.Title>{modalContent.title}</Modal.Title>
+        <Modal.Content>{modalContent.content}</Modal.Content>
+      </Modal>
     </section>
   );
 }
+
+// Modal component
+const Modal = ({ show, onClose, children }) => {
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    document.body.style.overflow = show ? "hidden" : "auto";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [show]);
+
+  return show ? (
+    <div className="fixed inset-0 flex items-center justify-center z-50" onKeyDown={handleKeyDown} tabIndex={-1}>
+      <div className="bg-white p-4 rounded shadow-lg">
+        {children}
+        <button className="mt-4 text-blue-500" onClick={onClose}>
+          Tamam
+        </button>
+      </div>
+    </div>
+  ) : null;
+};
+
+Modal.Title = ({ children }) => <h2 className="text-2xl font-bold mb-2">{children}</h2>;
+Modal.Content = ({ children }) => (
+  <ul className="mb-4 list-disc list-inside">
+    {children.map((child, index) => (
+      <li key={index}>{child}</li>
+    ))}
+  </ul>
+);
+Modal.Action = ({ onClick, passive, children }) => (
+  <button
+    className={`${passive ? "text-gray-500" : "text-blue-500"} text-sm font-bold uppercase hover:underline`}
+    onClick={onClick}>
+    {children}
+  </button>
+);
