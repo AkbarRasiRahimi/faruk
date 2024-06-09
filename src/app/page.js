@@ -57,13 +57,13 @@ export default function Home() {
   };
 
   return (
-    <section className="w-screen flex justify-center py-20 bg-base-100">
+    <section className="w-screen flex justify-center py-20 bg-base-100 h-full">
       <div className="w-screen grid grid-cols-1 gap-4 lg:grid-cols-3 px-10 max-w-[1200px]">
         {adverts.map((item) => (
-          <div key={item.title} className="card shadow-xl w-full bg-primary">
-            <div className="card-body">
+          <div key={item.title} className="card shadow-xl w-full bg-primary h-fit">
+            <div className="card-body ">
               <h2 className="card-title text-accent-content">{item.title}</h2>
-              <span className="font-bold flex justify-between items-end">{item.field}<i className="font-normal text-xs pl-2 text-warning" >{item.department}</i></span>
+              <span className="font-bold flex justify-between items-end">{item.field}<i className="font-normal text-xs pl-2 text-primary-content" >{item.department}</i></span>
               
               {item.requirements.length > 0 && (
                 <button onClick={() => handleModal("Info Requirements", item.requirements)} className="btn btn-info ">

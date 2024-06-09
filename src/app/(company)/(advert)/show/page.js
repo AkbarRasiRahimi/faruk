@@ -46,7 +46,7 @@ export default function Apply() {
   };
 
   const handleViewApplicants = (id) => {
-    router.push(`/advert/${id}/applicants`);
+    router.push(`/advert/${id}/application`);
   };
 
   if (isLoading) {

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Applicants = () => {
+const Application = () => {
   return (
     <section className="w-screen flex justify-center items-start h-screen py-20 bg-base-100">
       <div className="max-w-md p-6 bg-base-200 rounded-lg flex flex-col gap-4">
@@ -10,4 +10,4 @@ const Applicants = () => {
   );
 };
 
-export default Applicants;
+export default Application;

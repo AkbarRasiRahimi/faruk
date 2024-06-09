@@ -43,7 +43,7 @@ export default function Profile() {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      if(!token) return;
+      if (!token) return;
       try {
         const response = await fetch(`${apiUrl}/api/users/profile`, {
           method: "GET",
@@ -55,6 +55,8 @@ export default function Profile() {
         if (response.ok) {
           const data = await response.json();
           setFormData({
+            username: data.user?.username || "",
+            email: data.user?.email || "",
             firstName: data.user?.firstName || "",
             lastName: data.user?.lastName || "",
             phone: data.user?.phoneNumber || "",
