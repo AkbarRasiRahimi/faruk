@@ -22,6 +22,7 @@ export default function Home() {
       fetchAdverts();
       fetchApplications();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn, router, token]);
 
   const fetchAdverts = async () => {
@@ -114,12 +115,12 @@ export default function Home() {
                 <i className="font-normal text-xs pl-2 text-primary-content">{item.department}</i>
               </span>
 
-              {item.requirements.length > 0 && (
+              {item.requirements && (
                 <button onClick={() => handleModal("Info Requirements", item.requirements)} className="btn btn-info">
                   Info Requirements
                 </button>
               )}
-              {item.foreignLanguages.length > 0 && (
+              {item.foreignLanguages && (
                 <button
                   onClick={() => handleModal("Foreign Languages", item.foreignLanguages)}
                   className="btn btn-info">
@@ -174,9 +175,7 @@ Modal.Title = ({ children }) => <h2 className="text-2xl font-bold mb-2">{childre
 // eslint-disable-next-line react/display-name
 Modal.Content = ({ children }) => (
   <ul className="mb-4 list-disc list-inside">
-    {children.map((child, index) => (
-      <li key={index}>{child}</li>
-    ))}
+    {children}
   </ul>
 );
 // eslint-disable-next-line react/display-name
