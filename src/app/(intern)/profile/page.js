@@ -11,7 +11,7 @@ import Toast from "../../../components/toast";
 
 const languages = ["İngilizce", "Almanca", "Fransızca"];
 const languageLevels = ["A1", "A2", "B1", "B2", "C1", "C2"];
-const skillLevels = ["yeni", "orta", "uzman"];
+const skillLevels = ["başlangıç", "orta", "ileri"];
 
 languages.forEach((language) => {
   languageLevels[language] =

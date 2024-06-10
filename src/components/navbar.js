@@ -26,13 +26,13 @@ const Navbar = () => {
       {userType === "intern" ? (
         <div className="navbar-start flex justify-between w-full items-center">
           <div>
-            <Link href="/intern" className="btn btn-ghost">
+            <Link href="/create-application" className="btn btn-ghost">
               Staj Başvurularım
             </Link>
-            <Link href="/application" className="btn btn-ghost">
+            <Link href="/intern" className="btn btn-ghost">
               Kayıt Staj Programları
             </Link>
-            <Link href="/create-application" className="btn btn-ghost">
+            <Link href="/application" className="btn btn-ghost">
               Başvuru Yap
             </Link>{" "}
           </div>

@@ -33,7 +33,7 @@ export default function LoginCompany() {
     });
 
     if (response.ok) {
-      setToastMessage("Successfully logged in!");
+      setToastMessage("Başarıyla giriş yaptınız!");
       const data = await response.json();
       const token = data.accessToken;
       setTimeout(() => {
@@ -43,7 +43,12 @@ export default function LoginCompany() {
         setIsLoggedIn(true);
         setUserType(data.role);
         setToken(token);
-        router.replace("/");
+        if(data.role === "company"){
+          router.replace("/profile-company");
+        } else {
+           router.replace("/application");
+        }
+       
       }, 3000);
     } else {
       const data = await response.json();
