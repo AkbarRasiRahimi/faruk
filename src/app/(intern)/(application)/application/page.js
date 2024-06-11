@@ -107,7 +107,9 @@ export default function UserApplications() {
                     {application.advert ? application.advert.company?.companyName : "N/A"}
                   </td>
                   <td className="px-4 py-2">{application.advert ? application.advert.title : "N/A"}</td>
-                  <td className="px-4 py-2 text-accent ">
+                  <td className={`px-4 py-2 ${
+                    application.status === "pending" ? "text-gray-500" : application.status === "accepted" ? "text-green-500" : "text-red-500"
+                  }`}>
                     {application.status === "pending"
                       ? "Değerlendirmede"
                       : application.status === "accepted"

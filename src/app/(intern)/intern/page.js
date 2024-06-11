@@ -81,7 +81,20 @@ const Application = () => {
                     <tr key={application._id} className="text-center">
                       <th>{index + 1}</th>
                       <td className="capitalize font-bold text-xl">{application.advert.title}</td>
-                      <td className="capitalize font-bold text-xl">{application.status}</td>
+                      <td
+                        className={`px-4 py-2 ${
+                          application.status === "pending"
+                            ? "text-gray-500"
+                            : application.status === "accepted"
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }`}>
+                        {application.status === "pending"
+                          ? "Değerlendirmede"
+                          : application.status === "accepted"
+                          ? "Onaylandı"
+                          : "Red oldu"}
+                      </td>
                       <td>
                         <button
                           onClick={() => setModalAppId(application._id)}
