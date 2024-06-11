@@ -6,15 +6,15 @@ import { useGlobalState } from "../../../../store/global";
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const Application = () => {
   const { token, setIsLoading, isLoading } = useGlobalState();
   const router = useRouter();
-  const { id } = useParams();
   const [applications, setApplications] = useState([]);
   const [modalAppId, setModalAppId] = useState(null);
+  const [modalRating, setModalRating] = useState(0);
+  const [modalMessage, setModalMessage] = useState("");
 
   useEffect(() => {
     if (token) {
@@ -44,6 +44,32 @@ const Application = () => {
     } catch (error) {
       console.error("Error fetching applications:", error);
       setIsLoading(false);
+    }
+  };
+
+  const handleSaveRating = async (application) => {
+    try {
+      const payload = {
+        message: modalMessage,
+        rating: parseInt(modalRating),
+        advert: application.advert?._id,
+        intern: application.intern?._id,
+      };
+      const response = await fetch(`/api/score`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Ensure token is correctly set and valid
+        },
+        body: JSON.stringify(payload),
+      });
+      if (response.ok) {
+        fetchApplications(); // Ensure this function is defined and correctly implemented
+      } else {
+        console.error("Error saving rating:", await response.json());
+      }
+    } catch (error) {
+      console.error("Error saving rating:", error);
     }
   };
 
@@ -98,8 +124,14 @@ const Application = () => {
                               <textarea
                                 className="w-full p-2 border border-gray-300 rounded-md mb-4"
                                 rows="4"
-                                placeholder="Değerlendirme" />
-                              <select className="w-full p-2 border border-gray-300 rounded-md mb-4">
+                                value={modalMessage}
+                                onChange={(e) => setModalMessage(e.target.value)}
+                                placeholder="Değerlendirme"
+                              />
+                              <select
+                                className="w-full p-2 border border-gray-300 rounded-md mb-4"
+                                value={modalRating}
+                                onChange={(e) => setModalRating(e.target.value)}>
                                 <option value="">Pounla</option>
                                 {Array.from({ length: 5 }, (_, i) => (
                                   <option key={i + 1} value={i + 1}>
@@ -114,7 +146,7 @@ const Application = () => {
                                   Geri
                                 </button>
                                 <button
-                                  onClick={() => handleSaveRating(application._id)}
+                                  onClick={() => handleSaveRating(application)}
                                   className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
                                   Kaydet
                                 </button>

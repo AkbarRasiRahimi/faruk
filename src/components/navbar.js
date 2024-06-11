@@ -10,7 +10,6 @@ const Navbar = () => {
   const { userType, setIsLoggedIn } = useGlobalState();
   const router = useRouter();
   const currentPage = usePathname().split("/")[1];
-  console.log(currentPage);
 
   const onLogoutHandler = () => {
     localStorage.removeItem("token");
