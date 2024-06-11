@@ -50,54 +50,56 @@ export default function Profile() {
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
   const router = useRouter();
 
-  if (!token) {
-    router.push("/");
-  }
-
   useEffect(() => {
-    const fetchProfile = async () => {
-      if (!token) return;
-      try {
-        const response = await fetch(`${apiUrl}/api/users/profile`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+    if (!isLoggedIn) {
+      router.push("/login");
+    } else {
+      fetchProfile();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggedIn, router, token]);
+
+  const fetchProfile = async () => {
+    if (!token) return;
+    try {
+      const response = await fetch(`${apiUrl}/api/users/profile`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setFormData({
+          username: data.user?.username || "",
+          email: data.user?.email || "",
+          firstName: data.profile?.firstName || "",
+          lastName: data.profile?.lastName || "",
+          birthDate: data.profile?.birthDate || "",
+          phone: data.profile?.phoneNumber || "",
+          address: data.profile?.address || "",
+          university: data.profile?.university || "",
+          department: data.profile?.department || "",
+          class: data.profile?.class || "",
+          gpa: data.profile?.average ? data.profile.average.toString() : "",
+          experience: data.profile?.workExperience || "",
+          desiredField: data.profile?.desiredField || "",
+          skills: data.profile?.skills || [],
+          foreignLanguages: data.profile?.languages || [],
+          teamwork: data.profile?.teamWorkSkill || "",
+          communicationSkills: data.profile?.communicationSkill || "",
+          analyticalSkills: data.profile?.analyticalSkill || "",
+          hobbies: data.profile?.hobbies || [],
         });
-        if (response.ok) {
-          const data = await response.json();
-          setFormData({
-            username: data.user?.username || "",
-            email: data.user?.email || "",
-            firstName: data.profile?.firstName || "",
-            lastName: data.profile?.lastName || "",
-            birthDate: data.profile?.birthDate || "",
-            phone: data.profile?.phoneNumber || "",
-            address: data.profile?.address || "",
-            university: data.profile?.university || "",
-            department: data.profile?.department || "",
-            class: data.profile?.class || "",
-            gpa: data.profile?.average ? data.profile.average.toString() : "",
-            experience: data.profile?.workExperience || "",
-            desiredField: data.profile?.desiredField || "",
-            skills: data.profile?.skills || [],
-            foreignLanguages: data.profile?.languages || [],
-            teamwork: data.profile?.teamWorkSkill || "",
-            communicationSkills: data.profile?.communicationSkill || "",
-            analyticalSkills: data.profile?.analyticalSkill || "",
-            hobbies: data.profile?.hobbies || [],
-          });
-        } else {
-          const data = await response.json();
-          console.log("Error fetching profile", data);
-        }
-      } catch (error) {
-        console.log("Error fetching profile", error);
+      } else {
+        const data = await response.json();
+        console.log("Error fetching profile", data);
       }
-    };
-    fetchProfile();
-  }, [token]);
+    } catch (error) {
+      console.log("Error fetching profile", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;

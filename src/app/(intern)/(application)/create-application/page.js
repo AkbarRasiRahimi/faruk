@@ -122,19 +122,21 @@ export default function UserApplications() {
               </tr>
             </thead>
             <tbody>
-              {applications.map((application) => (
-                <tr key={application._id} className="bg-base-100 border-b border-base-300 text-center">
-                  <td className="px-4 py-2 font-bold text-info">
-                    {application.advert ? application.advert.title : "N/A"}
-                  </td>
-                  <td className="px-4 py-2">{application.__v}</td>
-                  <td className="px-4 py-2">
-                    <button className="btn btn-primary" onClick={() => handleModalOpen(application)}>
-                      İncele
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {applications
+                .filter((app) => app.status === "pending")
+                .map((application, index) => (
+                  <tr key={application._id} className="bg-base-100 border-b border-base-300 text-center">
+                    <td className="px-4 py-2 font-bold text-info">
+                      {application.advert ? application.advert.title : "N/A"}
+                    </td>
+                    <td className="px-4 py-2">{application.__v}</td>
+                    <td className="px-4 py-2">
+                      <button className="btn btn-primary" onClick={() => handleModalOpen(application)}>
+                        İncele
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         )}
@@ -188,7 +190,9 @@ export default function UserApplications() {
             </div>
             <div className="flex justify-end mt-6 gap-4">
               <button
-                className={`px-4 py-2 ${hasApplied(modalContent._id) ? "bg-accent" : "bg-primary"}  text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50`}
+                className={`px-4 py-2 ${
+                  hasApplied(modalContent._id) ? "bg-accent" : "bg-primary"
+                }  text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50`}
                 onClick={() => handleApply(modalContent._id)}
                 disabled={hasApplied(modalContent._id)}>
                 {hasApplied(modalContent._id) ? "Başvuru Yapıldı" : "Başvuru yap"}

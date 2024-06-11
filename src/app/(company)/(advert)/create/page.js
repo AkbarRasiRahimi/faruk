@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { HiPlus } from "react-icons/hi";
 import { useGlobalState } from "../../../../store/global";
 import Loading from "../../../../components/loading";
 import Toast from "../../../../components/toast";
@@ -143,7 +142,7 @@ export default function Advert() {
             <span className="text-error">*</span>Requirements:
           </label>
           <textarea
-            className="textarea textarea-bordered textarea-primary textarea-sm w-full bg-transparent text-neutral-content"
+            className="textarea textarea-bordered textarea-primary textarea-sm w-full bg-transparent text-neutral-content leading-tight p-4"
             placeholder="Add requirements"
             required
             name="requirements"
@@ -154,7 +153,7 @@ export default function Advert() {
             <span className="text-error">*</span>Foreign Languages:
           </label>
           <textarea
-            className="textarea textarea-bordered textarea-primary textarea-sm w-full bg-transparent text-neutral-content"
+            className="textarea textarea-bordered textarea-primary textarea-sm w-full bg-transparent text-neutral-content leading-tight p-4"
             placeholder="Add foreign languages"
             required
             name="foreignLanguages"
