@@ -101,7 +101,8 @@ export default function Apply() {
                     {fetchApplications(advert._id).then((data) => {
                       if (data) {
                         return (
-                          data.applications.length > 0 && (
+                          data.applications.length > 0 &&
+                          data.applications.filter((app) => app.status === "pending").length > 0 && (
                             <div className="indicator">
                               {" "}
                               <button
@@ -109,11 +110,9 @@ export default function Apply() {
                                 className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
                                 İlana Başvuranlar
                               </button>
-                              {data.applications.filter((app) => app.status === "pending").length > 0 && (
-                                <span className="badge badge-sm bg-warning indicator-item">
-                                  {data.applications.filter((app) => app.status === "pending").length}
-                                </span>
-                              )}
+                              <span className="badge badge-sm bg-warning indicator-item">
+                                {data.applications.filter((app) => app.status === "pending").length}
+                              </span>
                             </div>
                           )
                         );

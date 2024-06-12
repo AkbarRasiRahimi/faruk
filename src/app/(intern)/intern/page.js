@@ -14,6 +14,8 @@ const Application = () => {
   const { id } = useParams();
   const [applications, setApplications] = useState([]);
   const [modalAppId, setModalAppId] = useState(null);
+  const [modalRating, setModalRating] = useState(null);
+  const [modalMessage, setModalMessage] = useState(null);
 
   useEffect(() => {
     if (token) {
@@ -43,6 +45,32 @@ const Application = () => {
     } catch (error) {
       console.error("Error fetching applications:", error);
       setIsLoading(false);
+    }
+  };
+
+  const handleSaveRating = async (application) => {
+    console.log(application);
+    try {
+      const payload = {
+        score: parseInt(modalRating),
+        comment: modalMessage,
+        company: application.advert.company?._id,
+      };
+      const response = await fetch(`${apiUrl}/api/reviews`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Ensure token is correctly set and valid
+        },
+        body: JSON.stringify(payload),
+      });
+      if (response.ok) {
+        setModalAppId(null);
+      } else {
+        console.error("Error saving rating:", await response.json());
+      }
+    } catch (error) {
+      console.error("Error saving rating:", error);
     }
   };
 
@@ -109,10 +137,14 @@ const Application = () => {
                               <textarea
                                 className="w-full p-2 border border-gray-300 rounded-md mb-4"
                                 rows="4"
+                                value={modalMessage}
+                                onChange={(e) => setModalMessage(e.target.value)}
                                 placeholder="Değerlendirme"
                               />
-                              <select className="w-full p-2 border border-gray-300 rounded-md mb-4">
-                                <option value="">Pounla</option>
+                              <select className="w-full p-2 border border-gray-300 rounded-md mb-4" onChange={(e) => setModalRating(e.target.value)}>
+                                <option value="" >
+                                  Pounla
+                                </option>
                                 {Array.from({ length: 5 }, (_, i) => (
                                   <option key={i + 1} value={i + 1}>
                                     {i + 1}
@@ -126,7 +158,7 @@ const Application = () => {
                                   Geri
                                 </button>
                                 <button
-                                  onClick={() => handleSaveRating(application._id)}
+                                  onClick={() => handleSaveRating(application)}
                                   className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
                                   Kaydet
                                 </button>

@@ -25,23 +25,20 @@ if (!mongoose.connection.readyState) {
 const Score = mongoose.models.Score || mongoose.model("Score", scoreSchema);
 
 export async function POST(req) {
-  // try {
-  //   const { advert, message, rating, intern } = await req.json();
+  try {
+    const { advert, message, rating, intern } = await req.json();
 
-  //   if (!advert || !message || !rating || !intern) {
-  //     return NextResponse.json({ error: "All fields are required" }, { status: 400 });
-  //   }
+    if (!advert || !message || !rating || !intern) {
+      return NextResponse.json({ error: "All fields are required" }, { status: 400 });
+    }
 
-  //   // Convert advert and intern to ObjectId
-  //   const advertId = new mongoose.Types.ObjectId(advert);
-
-  //   const newScore = new Score({ advert: advertId, message, rating, intern: user.intern });
-  //   await newScore.save();
-  //   return NextResponse.json(newScore, { status: 201 });
-  // } catch (error) {
-  //   console.error("Error saving new score:", error);
-  //   return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
-  // }
+    const newScore = new Score({ advert: advert, message, rating, intern: intern });
+    await newScore.save();
+    return NextResponse.json(newScore, { status: 201 });
+  } catch (error) {
+    console.error("Error saving new score:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
 }
 
 export function onNoMatch(req) {

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
+import * as jose from "jose";
 import moment from "moment";
-
 
 const serverRuntimeConfig = {
   jwtSettings: {
@@ -16,7 +15,7 @@ export function middleware(request) {
       return NextResponse.json({ error: "Token not found" }, { status: 401 });
     }
     const result = verifyToken(token);
-    console.log(serverRuntimeConfig.jwtSettings.privateKey);
+
     if (!result.verified) {
       return NextResponse.json({ error: "Invalid or expired token" }, { status: 403 });
     }
@@ -29,9 +28,8 @@ export function middleware(request) {
 
 function verifyToken(token) {
   try {
-    const decoded = jwt.verify(token, serverRuntimeConfig.jwtSettings.privateKey, {
-      ignoreExpiration: false, // Set to false to check token expiration
-    });
+    const decoded = jose.jwtVerify(token, new TextEncoder().encode(serverRuntimeConfig.jwtSettings.privateKey));
+    console.log("decoded :", decoded);
     // Check if token has expired
     if (decoded.exp < moment().unix()) {
       return {

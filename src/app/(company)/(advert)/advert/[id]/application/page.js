@@ -46,6 +46,44 @@ const Application = () => {
     }
   };
 
+  const handelAcceptApplication = async (applicationId) => {
+    try {
+      const response = await fetch(`${apiUrl}/api/applications/accept/${applicationId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        fetchApplications();
+      } else {
+        console.error("Error accepting application:", await response.json());
+      }
+    } catch (error) {
+      console.error("Error accepting application:", error);
+    }
+  };
+
+  const handelRejectApplication = async (applicationId) => {
+    try {
+      const response = await fetch(`${apiUrl}/api/applications/reject/${applicationId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        fetchApplications();
+      } else {
+        console.error("Error rejecting application:", await response.json());
+      }
+    } catch (error) {
+      console.error("Error rejecting application:", error);
+    }
+  };
+
   return (
     <div className="w-screen flex justify-center items-start py-20 bg-base-100">
       <div className="overflow-x-auto">
@@ -76,26 +114,28 @@ const Application = () => {
                 </tr>
               </thead>
               <tbody>
-                {applications.filter((app) => app.status === "pending").map((application, index) => (
-                  <tr key={application._id} className="text-center">
-                    <th>{index + 1}</th>
-                    <td className="capitalize font-bold text-xl">{application.intern.firstName}</td>
-                    <td className="capitalize font-bold text-xl">{application.intern.lastName}</td>
-                    <td className="capitalize font-bold text-xl">{application.__v}</td>
-                    <td>
-                      <button
-                        onClick={() => handleViewAdvert(application._id)}
-                        className="px-4 py-2 bg-success text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
-                        kabul Et
-                      </button>
-                      <button
-                        onClick={() => handleViewApplicants(application._id)}
-                        className="px-4 py-2 ml-2 bg-warning text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
-                        Reddet
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {applications
+                  .filter((app) => app.status === "pending")
+                  .map((application, index) => (
+                    <tr key={application._id} className="text-center">
+                      <th>{index + 1}</th>
+                      <td className="capitalize font-bold text-xl">{application.intern.firstName}</td>
+                      <td className="capitalize font-bold text-xl">{application.intern.lastName}</td>
+                      <td className="capitalize font-bold text-xl">{application.__v}</td>
+                      <td>
+                        <button
+                          onClick={() => handelAcceptApplication(application._id)}
+                          className="px-4 py-2 bg-success text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+                          kabul Et
+                        </button>
+                        <button
+                          onClick={() => handelRejectApplication(application._id)}
+                          className="px-4 py-2 ml-2 bg-warning text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+                          Reddet
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
             <button

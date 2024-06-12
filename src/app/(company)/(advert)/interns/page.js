@@ -50,12 +50,11 @@ const Application = () => {
   const handleSaveRating = async (application) => {
     try {
       const payload = {
-        message: modalMessage,
-        rating: parseInt(modalRating),
-        advert: application.advert?._id,
+        score: parseInt(modalRating),
+        comment: modalMessage,
         intern: application.intern?._id,
       };
-      const response = await fetch(`/api/score`, {
+      const response = await fetch(`${apiUrl}/api/reviews`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,7 +63,7 @@ const Application = () => {
         body: JSON.stringify(payload),
       });
       if (response.ok) {
-        fetchApplications(); // Ensure this function is defined and correctly implemented
+        setModalAppId(null);
       } else {
         console.error("Error saving rating:", await response.json());
       }
