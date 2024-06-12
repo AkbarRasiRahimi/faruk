@@ -55,32 +55,32 @@ export default function Register() {
           <h1 className="text-3xl text-center font-bold mb-2">Kayıt Ol</h1>
           <form onSubmit={handleSubmit}>
             <div className="form-control">
-              <label className="label mb-2 text-neutral-content">Kullanıcı Adınız*</label>
+              <label className="label mb-2 ">Kullanıcı Adınız*</label>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="input input-bordered input-primary input-sm w-full bg-transparent text-neutral-content"
+                className="input input-bordered input-primary input-sm w-full bg-transparent "
                 placeholder="Kullanıcı Adınız"
                 required
               />
             </div>
             <div className="form-control mt-2">
-              <label className="label mb-2 text-neutral-content">E-posta Adresiniz*</label>
+              <label className="label mb-2 ">E-posta Adresiniz*</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="input input-bordered input-primary input-sm w-full bg-transparent text-neutral-content"
+                className="input input-bordered input-primary input-sm w-full bg-transparent "
                 placeholder="E-posta Adresiniz"
                 required
               />
             </div>
             <div className="form-control mt-2">
-              <label className="label mb-2 text-neutral-content">Kullanıcı Türü Seçiniz*</label>
+              <label className="label mb-2 ">Kullanıcı Türü Seçiniz*</label>
               <select
                 onChange={(e) => setRole(e.target.value)}
-                className="select select-bordered select-primary select-sm w-full bg-transparent text-neutral-content"
+                className="select select-bordered select-primary select-sm w-full bg-transparent "
                 required>
                 <option value="" disabled>
                   Lütfen Seçiniz
@@ -90,12 +90,12 @@ export default function Register() {
               </select>
             </div>
             <div className="form-control mt-2">
-              <label className="label mb-2 text-neutral-content">Şifrenizi Giriniz*</label>
+              <label className="label mb-2 ">Şifrenizi Giriniz*</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="input input-bordered input-primary input-sm w-full bg-transparent text-neutral-content"
+                className="input input-bordered input-primary input-sm w-full bg-transparent "
                 placeholder="Şifrenizi Giriniz"
                 required
               />

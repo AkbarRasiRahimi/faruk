@@ -116,54 +116,54 @@ export default function Advert() {
         onSubmit={handleSubmit}>
         <div className="w-full max-w-md p-6 bg-base-200 rounded-lg h-fit">
           <h1 className="text-2xl font-bold mb-6">Advert Information</h1>
-          <label className="label mb-2 text-neutral-content">Title:</label>
+          <label className="label mb-2 ">Title:</label>
           <input
             type="text"
-            className="input input-bordered input-primary input-sm w-full bg-transparent text-neutral-content"
+            className="input input-bordered input-primary input-sm w-full bg-transparent "
             placeholder="Title"
             required
             name="title"
             onChange={handleChange}
             value={formData.title}
           />
-          <label className="label mb-2 text-neutral-content flex justify-start">
+          <label className="label mb-2  flex justify-start">
             <span className="text-error">*</span>Field:
           </label>
           <input
             type="text"
-            className="input input-bordered input-primary input-sm w-full bg-transparent text-neutral-content"
+            className="input input-bordered input-primary input-sm w-full bg-transparent "
             placeholder="Field"
             required
             name="field"
             onChange={handleChange}
             value={formData.field}
           />
-          <label className="label mb-2 text-neutral-content flex justify-start">
+          <label className="label mb-2  flex justify-start">
             <span className="text-error">*</span>Requirements:
           </label>
           <textarea
-            className="textarea textarea-bordered textarea-primary textarea-sm w-full bg-transparent text-neutral-content leading-tight p-4"
+            className="textarea textarea-bordered textarea-primary textarea-sm w-full bg-transparent  leading-tight p-4"
             placeholder="Add requirements"
             required
             name="requirements"
             onChange={handleRequirementsChange}
             value={formData.requirements}
           />
-          <label className="label mb-2 text-neutral-content flex justify-start">
+          <label className="label mb-2  flex justify-start">
             <span className="text-error">*</span>Foreign Languages:
           </label>
           <textarea
-            className="textarea textarea-bordered textarea-primary textarea-sm w-full bg-transparent text-neutral-content leading-tight p-4"
+            className="textarea textarea-bordered textarea-primary textarea-sm w-full bg-transparent  leading-tight p-4"
             placeholder="Add foreign languages"
             required
             name="foreignLanguages"
             onChange={handleForeignLanguagesChange}
             value={formData.foreignLanguages}
           />
-          <label className="label mb-2 text-neutral-content">Department:</label>
+          <label className="label mb-2 ">Department:</label>
           <input
             type="text"
-            className="input input-bordered input-primary input-sm w-full bg-transparent text-neutral-content"
+            className="input input-bordered input-primary input-sm w-full bg-transparent "
             placeholder="Department"
             required
             name="department"
