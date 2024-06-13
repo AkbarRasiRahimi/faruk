@@ -52,13 +52,9 @@ export default function Profile() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      router.push("/login");
-    } else {
-      fetchProfile();
-    }
+    fetchProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn, router, token]);
+  }, [isLoggedIn]);
 
   const fetchProfile = async () => {
     if (!token) return;

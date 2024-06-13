@@ -16,11 +16,8 @@ const Application = () => {
   const [applications, setApplications] = useState([]);
 
   useEffect(() => {
-    if (token) {
-      fetchApplications();
-    } else {
-      router.push("/login");
-    }
+    fetchApplications();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 

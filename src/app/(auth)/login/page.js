@@ -14,7 +14,7 @@ export default function LoginCompany() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [toastMessage, setToastMessage] = useState("");
-  const { setIsLoading, isLoading, setToken, setIsLoggedIn, setUserType } = useGlobalState();
+  const { setIsLoading, isLoading, setToken, setIsLoggedIn, setUserType, setUserID } = useGlobalState();
   const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,12 +36,21 @@ export default function LoginCompany() {
       setToastMessage("Başarıyla giriş yaptınız!");
       const data = await response.json();
       const token = data.accessToken;
+      const responseProfile = await fetch(`${apiUrl}/api/users/profile`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const dataProfile = await responseProfile.json();
       setTimeout(() => {
         setToastMessage("");
         setIsLoading(false);
         localStorage.setItem("token", token);
         setIsLoggedIn(true);
         setUserType(data.role);
+        setUserID(dataProfile.profile._id);
         setToken(token);
         if (data.role === "company") {
           router.replace("/profile-company");

@@ -13,8 +13,8 @@ const Navbar = () => {
 
   const onLogoutHandler = () => {
     localStorage.removeItem("token");
-    setIsLoggedIn(false);
     router.push("/");
+    setIsLoggedIn(false);
     window.location.reload();
   };
 
