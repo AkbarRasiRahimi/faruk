@@ -122,7 +122,7 @@ export default function UserApplications() {
 
   return (
     <section className="w-screen flex justify-center pb-5 mt-72 sm:mt-20 bg-base-100">
-      <div className="w-screen max-w-[1200px] px-10">
+      <div className="w-screen max-w-[1200px] px-1 sm:px-10">
         <h1 className="text-2xl font-bold mb-4">Başvurularım</h1>
         {matches.length === 0 ? (
           <div className="flex flex-col items-center justify-center">
