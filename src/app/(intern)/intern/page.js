@@ -58,7 +58,7 @@ const Application = () => {
   const fetchReviewsAdvert = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${apiUrl}/api/reviews/interns/${userID}`, {
+      const response = await fetch(`${apiUrl}/api/reviews/adverts/`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -123,7 +123,7 @@ const Application = () => {
   if (isLoading || !isLoggedIn) {
     return <Loading />;
   }
-  console.log(applications);
+
   return (
     <section className="w-screen flex justify-center pb-5 mt-72 sm:mt-20  bg-base-100">
       <div className="w-screen max-w-[1200px] px-1 sm:px-10">

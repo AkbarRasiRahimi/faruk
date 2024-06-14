@@ -8,21 +8,21 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function UserApplications() {
   const { isLoading, isLoggedIn, token, setIsLoading } = useGlobalState();
-  const [applications, setApplications] = useState([]);
+  const [matches, setMatches] = useState([]);
   const [modalContent, setModalContent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    fetchApplications();
+    fetchMatches();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
-  const fetchApplications = async () => {
+  const fetchMatches = async () => {
     if (!token) return;
     setIsLoading(true);
     try {
-      const response = await fetch(`${apiUrl}/api/applications/own`, {
+      const response = await fetch(`${apiUrl}/api/matches`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export default function UserApplications() {
       });
       if (response.ok) {
         const data = await response.json();
-        setApplications(data.applications);
+        setMatches(data.matches);
       } else {
         console.error("Error fetching applications", await response.json());
       }
@@ -114,7 +114,7 @@ export default function UserApplications() {
     <section className="w-screen flex justify-center pb-5 mt-72 sm:mt-20 bg-base-100">
       <div className="w-screen max-w-[1200px] px-10">
         <h1 className="text-2xl font-bold mb-4">Başvurularım</h1>
-        {applications.filter((app) => app.status === "pending").length === 0 ? (
+        {matches.filter((app) => app.status === "pending").length === 0 ? (
           <div className="flex flex-col items-center justify-center">
             <div className="text-center text-3xl text-gray-500 mt-10">Size uygun bir ilan bulunmuyor !!!</div>
             <p className="text-center text-red-500 mt-4"> Önemly : Başvuru yapmadan önce profilinizi oluşturun</p>
@@ -129,7 +129,7 @@ export default function UserApplications() {
               </tr>
             </thead>
             <tbody>
-              {applications
+              {matches
                 .filter((app) => app.status === "pending")
                 .map((application, index) => (
                   <tr key={application._id} className="bg-base-100 border-b border-base-300 text-center">
