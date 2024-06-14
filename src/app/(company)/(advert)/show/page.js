@@ -13,11 +13,8 @@ export default function Apply() {
   const router = useRouter();
 
   useEffect(() => {
-    if (token) {
-      fetchAdverts();
-    } else {
-      router.push("/login");
-    }
+    fetchAdverts();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
@@ -109,13 +106,13 @@ export default function Apply() {
                           return (
                             data.applications.length > 0 &&
                             data.applications.filter((app) => app.status === "pending").length > 0 && (
-                              <div className="indicator">
+                              <div>
                                 <button
                                   onClick={() => handleViewApplicants(advert._id)}
                                   className="px-4 py-1 rounded-md bg-primary text-primary-content ">
                                   İlana Başvuranlar
                                 </button>
-                                <span className="badge badge-sm bg-warning indicator-item">
+                                <span className="rounded-full px-3 bg-warning">
                                   {data.applications.filter((app) => app.status === "pending").length}
                                 </span>
                               </div>

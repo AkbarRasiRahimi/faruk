@@ -26,12 +26,11 @@ const Application = () => {
 
   const [toastMessage, setToastMessage] = useState("");
   const [reviews, setReviews] = useState([]);
-  // const [reviewsIntern, setReviewsIntern] = useState([]);
+ 
 
   useEffect(() => {
     fetchApplications();
     fetchReviewsAdvert();
-    //fetchReviewsAdvertIntern();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
