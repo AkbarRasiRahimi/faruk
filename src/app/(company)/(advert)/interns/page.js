@@ -69,25 +69,21 @@ const Application = () => {
     }
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
-    <div className="w-screen flex justify-center items-start py-20 bg-base-100">
-      <div className="overflow-x-auto">
-        <h1 className="text-2xl font-bold mb-6">Stajyerler</h1>
-        {isLoading ? (
-          <Loading />
-        ) : applications.length === 0 ? (
-          <>
-            {" "}
-            <p>Stajyer bulunamadı.</p>{" "}
-            <button
-              className="px-4 mt-5 py-2 bg-primary text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
-              onClick={() => router.back()}>
-              Geri
-            </button>
-          </>
+    <section className="w-screen flex justify-center pb-5 mt-72 sm:mt-20  bg-base-100">
+      <div className="w-screen max-w-[1200px] px-10">
+        <h1 className="text-2xl font-bold mb-4">Stajyerler</h1>
+        {applications.length === 0 ? (
+          <div className="flex flex-col items-center justify-center">
+            <div className="text-center text-3xl text-gray-500 mt-10">Kayıtlı Stajyer bulunamadı.!!!</div>
+            <p className="text-center text-red-500 mt-4"> Önemly : İlan vermeden önce profilinizi oluşturun</p>
+          </div>
         ) : (
           <>
-            {" "}
             <table className="table table-zebra bg-base-200">
               <thead>
                 <tr className="text-center">
@@ -158,7 +154,7 @@ const Application = () => {
           </>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

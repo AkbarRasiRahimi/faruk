@@ -125,7 +125,7 @@ const Application = () => {
 
   return (
     <section className="w-screen flex justify-center pb-5 mt-72 sm:mt-20  bg-base-100">
-      <div className="w-screen max-w-[1200px] px-10">
+      <div className="w-screen max-w-[1200px] px-1 sm:px-10">
         <h1 className="text-2xl font-bold mb-4">Kayıtlı Staj</h1>
         {applications.length === 0 ? (
           <div className="flex flex-col items-center justify-center">
@@ -166,8 +166,8 @@ const Application = () => {
                       </td>
                       <td className="px-4 py-2 h-2">
                         {reviews?.find((item) => item.advert === application.advert._id) ? (
-                          <a
-                            href="#"
+                          <div
+                            className=" text-accent hover:text-primary hover:cursor-pointer"
                             onClick={() => {
                               setModalShowCommentId(application._id);
                               // Get comment and rating from reviews
@@ -176,7 +176,7 @@ const Application = () => {
                               setModalShowCommentRating(review?.score || 0);
                             }}>
                             Zaten pounlandı
-                          </a>
+                          </div>
                         ) : (
                           <button
                             onClick={() => setModalAppId(application._id)}
@@ -224,11 +224,18 @@ const Application = () => {
                         )}
                         {modalShowCommentId === application._id && (
                           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 ">
-                            <div className="bg-white p-8 rounded-lg text-left min-w-[350px]">
+                            <div className="bg-white p-8 rounded-lg text-left min-w-[350px] max-w-96 max-h-96 ">
                               <h2 className="text-2xl font-bold mb-4">Pounlama</h2>
                               <p className="capitalize font-bold text-xl p-2">{application.advert.title}</p>
                               <p className="capitalize font-bold text-md p-2">Mesaj : {modalShowComment}</p>
-                              <p className="capitalize font-bold text-xl p-2">Pouan : {modalShowCommentRating}</p>
+                              <p className="capitalize font-bold text-xl  p-2">
+                                Yıldız :{" "}
+                                {Array.from({ length: modalShowCommentRating }, () => (
+                                  <span className="text-yellow-500 mr-1" key={modalShowCommentRating}>
+                                    ★
+                                  </span>
+                                ))}
+                              </p>
                               <div className="flex justify-end items-end">
                                 <button
                                   onClick={() => setModalShowCommentId(null)}

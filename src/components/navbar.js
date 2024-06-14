@@ -52,7 +52,7 @@ const Navbar = () => {
         </div>
       ) : (
         <div className="navbar-start flex justify-between w-full flex-col sm:flex-row">
-          <div>
+          <div className="flex flex-col sm:flex-row">
             <Link href="/create" className={`btn ${currentPage === "create" ? "btn-primary" : "btn-ghost"}`}>
               İlan Oluştur
             </Link>
@@ -65,7 +65,7 @@ const Navbar = () => {
               Stajyerler
             </Link>
           </div>
-          <div className="flex items-center">
+          <div className="flex flex-col sm:flex-row">
             <Link
               href="/profile-company"
               className={`btn ${currentPage === "profile-company" ? "btn-primary" : "btn-ghost"}`}>

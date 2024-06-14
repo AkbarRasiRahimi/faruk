@@ -102,10 +102,10 @@ export default function AdvertDetail() {
   }
 
   return (
-    <section className="w-screen flex justify-center items-start py-20 bg-base-100">
-      <div className=" p-6 bg-base-200 rounded-lg flex flex-col gap-4">
+    <section className="w-screen flex justify-center items-start mt-72 sm:mt-20 bg-base-100">
+      <div className="bg-base-200 rounded-lg flex flex-col gap-4">
         {editMode ? (
-          <div className="flex flex-col w-full min-w-[350px] justify-center items-center bg-base-200 pb-20 gap-2">
+          <div className="flex flex-col w-screen max-w-[550px] justify-center items-center bg-base-200 pb-2 gap-2">
             <div className="w-full max-w-md p-6 bg-base-100 rounded-lg h-fit">
               <h1 className="text-2xl font-bold mb-6">Advert Information</h1>
               <label className="label mb-2 ">Title:</label>
