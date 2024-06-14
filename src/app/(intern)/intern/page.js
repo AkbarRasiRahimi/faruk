@@ -94,13 +94,14 @@ const Application = () => {
       });
       if (response.ok) {
         setToastMessage("Poulama başarıyla kaydedildi");
-        resetModalForm();
-        fetchReviewsAdvert();
+        //resetModalForm();
+        //fetchReviewsAdvert();
         setTimeout(() => {
           setToastMessage("");
         }, 3000);
       } else {
-        setToastMessage("Poulama kaydinda hata oluştu");
+        const data = await response.json();
+        setToastMessage(data.message);
         setTimeout(() => {
           setToastMessage("");
         }, 3000);
@@ -122,7 +123,7 @@ const Application = () => {
   if (isLoading || !isLoggedIn) {
     return <Loading />;
   }
-
+  console.log(applications);
   return (
     <section className="w-screen flex justify-center pb-5 mt-72 sm:mt-20  bg-base-100">
       <div className="w-screen max-w-[1200px] px-1 sm:px-10">
@@ -190,35 +191,38 @@ const Application = () => {
                             <div className="bg-white p-8 rounded-lg">
                               <h2 className="text-2xl font-bold mb-4">Pounlama</h2>
                               <p className="capitalize font-bold text-xl p-2">{application.advert.title}</p>
-                              <textarea
-                                className="w-full p-2 border border-gray-300 rounded-md mb-4"
-                                rows="4"
-                                value={modalMessage}
-                                onChange={(e) => setModalMessage(e.target.value)}
-                                placeholder="Değerlendirme"
-                              />
-                              <select
-                                className="w-full p-2 border border-gray-300 rounded-md mb-4"
-                                onChange={(e) => setModalRating(e.target.value)}>
-                                <option value="">Pounla</option>
-                                {Array.from({ length: 5 }, (_, i) => (
-                                  <option key={i + 1} value={i + 1}>
-                                    {i + 1}
-                                  </option>
-                                ))}
-                              </select>
-                              <div className="flex justify-end">
-                                <button
-                                  onClick={() => setModalAppId(null)}
-                                  className="px-4 py-2 bg-white text-black rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 mr-2">
-                                  Geri
-                                </button>
-                                <button
-                                  onClick={() => handleSaveRating(application)}
-                                  className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
-                                  Kaydet
-                                </button>
-                              </div>
+                              <form>
+                                <textarea
+                                  className="w-full p-2 border border-gray-300 rounded-md mb-4"
+                                  rows="4"
+                                  value={modalMessage}
+                                  required
+                                  onChange={(e) => setModalMessage(e.target.value)}
+                                  placeholder="Değerlendirme"
+                                />
+                                <select
+                                  className="w-full p-2 border border-gray-300 rounded-md mb-4"
+                                  onChange={(e) => setModalRating(e.target.value)}>
+                                  <option value="">Pounla</option>
+                                  {Array.from({ length: 5 }, (_, i) => (
+                                    <option key={i + 1} value={i + 1}>
+                                      {i + 1}
+                                    </option>
+                                  ))}
+                                </select>
+                                <div className="flex justify-end">
+                                  <button
+                                    onClick={() => setModalAppId(null)}
+                                    className="px-4 py-2 bg-white text-black rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 mr-2">
+                                    Geri
+                                  </button>
+                                  <button
+                                    onClick={() => handleSaveRating(application)}
+                                    className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+                                    Kaydet
+                                  </button>
+                                </div>
+                              </form>
                             </div>
                           </div>
                         )}
