@@ -124,17 +124,16 @@ const Application = () => {
   }
 
   return (
-    <section className="w-screen flex justify-center py-20 bg-base-100 h-full">
+    <section className="w-screen flex justify-center pb-5 mt-72 sm:mt-20  bg-base-100">
       <div className="w-screen max-w-[1200px] px-10">
-        <h1 className="text-2xl font-bold mb-6">Kayıtlı Staj</h1>
+        <h1 className="text-2xl font-bold mb-4">Kayıtlı Staj</h1>
         {applications.length === 0 ? (
           <div className="flex flex-col items-center justify-center">
-            <div className="text-center text-3xl text-gray-500 mt-20">Kayıtlı Staj bulunamadı.!!!</div>
+            <div className="text-center text-3xl text-gray-500 mt-10">Kayıtlı Staj bulunamadı.!!!</div>
             <p className="text-center text-red-500 mt-4"> Önemly : Başvuru yapmadan önce profilinizi oluşturun</p>
           </div>
         ) : (
-          <>
-            {" "}
+          <div className="overflow-x-auto">
             <table className="table-auto w-full bg-base-200 rounded-lg">
               <thead>
                 <tr className="bg-base-300 text-left">
@@ -165,7 +164,7 @@ const Application = () => {
                           ? "Onaylandı"
                           : "Red oldu"}
                       </td>
-                      <td className="px-4 py-2">
+                      <td className="px-4 py-2 h-2">
                         {reviews?.find((item) => item.advert === application.advert._id) ? (
                           <a
                             href="#"
@@ -181,7 +180,7 @@ const Application = () => {
                         ) : (
                           <button
                             onClick={() => setModalAppId(application._id)}
-                            className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+                            className="px-4 py-1 rounded-md bg-primary text-primary-content ">
                             Pounlama
                           </button>
                         )}
@@ -245,7 +244,7 @@ const Application = () => {
                   ))}
               </tbody>
             </table>
-          </>
+          </div>
         )}
       </div>
       {toastMessage && <Toast message={toastMessage} />}

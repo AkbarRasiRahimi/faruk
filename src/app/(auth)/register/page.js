@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import Toast from "../../../components/toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import Image from "next/image";
+import bgImage from "../../../assets/image/bg.jpg";
 export default function Register() {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("intern");
@@ -49,8 +50,9 @@ export default function Register() {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center bg-neutral-focus">
-      <div className="card shadow-xl w-96 bg-base-100">
+    <div className="w-screen h-screen flex flex-col justify-center items-center bg-neutral-focus relative">
+      <Image src={bgImage} alt="bg" className="w-full h-full object-cover absolute top-0 left-0 " />
+      <div className="card shadow-xl w-full sm:w-96 bg-base-100">
         <div className="card-body p-6">
           <h1 className="text-3xl text-center font-bold mb-2">Kayıt Ol</h1>
           <form onSubmit={handleSubmit}>

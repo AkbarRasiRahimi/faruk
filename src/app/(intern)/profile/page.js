@@ -254,9 +254,9 @@ export default function Profile() {
   };
 
   return (
-    <section className="w-screen flex justify-center items-start h-screen py-20 bg-base-100">
+    <section className="w-screen flex justify-center items-start  mt-72 sm:mt-20  bg-base-100">
       <form
-        className="flex flex-col w-screen h-fit justify-center items-center bg-base-100 md:flex-row md:items-start md:space-x-6 pb-20 gap-2"
+        className="flex flex-col w-screen h-fit justify-center items-center bg-base-100 md:flex-row md:items-start md:space-x-6 gap-2"
         onSubmit={handleSubmit}>
         <div className="w-full max-w-md p-6 bg-base-200 md:w-1/2 rounded-lg h-fit">
           <h1 className="text-2xl font-bold mb-6">Profil Bilgileri</h1>

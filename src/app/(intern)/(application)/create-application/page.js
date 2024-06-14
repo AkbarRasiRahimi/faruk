@@ -111,12 +111,12 @@ export default function UserApplications() {
   }
 
   return (
-    <section className="w-screen flex justify-center py-20 bg-base-100 h-full">
+    <section className="w-screen flex justify-center pb-5 mt-72 sm:mt-20 bg-base-100">
       <div className="w-screen max-w-[1200px] px-10">
         <h1 className="text-2xl font-bold mb-4">Başvurularım</h1>
-        {applications.length === 0 ? (
+        {applications.filter((app) => app.status === "pending").length === 0 ? (
           <div className="flex flex-col items-center justify-center">
-            <div className="text-center text-3xl text-gray-500 mt-20">Henüz başvuru yapılmadı!!!</div>
+            <div className="text-center text-3xl text-gray-500 mt-10">Size uygun bir ilan bulunmuyor !!!</div>
             <p className="text-center text-red-500 mt-4"> Önemly : Başvuru yapmadan önce profilinizi oluşturun</p>
           </div>
         ) : (

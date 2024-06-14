@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 import Toast from "../../../components/toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+import bgImage from "../../../assets/image/bg.jpg";
 
 import { useGlobalState } from "../../../store/global";
 
@@ -75,8 +78,9 @@ export default function LoginCompany() {
   }, []);
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center bg-neutral-focus">
-      <div className="card shadow-xl w-96 bg-base-100">
+    <div className="relative w-screen h-screen flex flex-col justify-center items-center bg-neutral-focus">
+      <Image src={bgImage} alt="bg" className="w-full h-full object-cover absolute top-0 left-0 " />
+      <div className="card shadow-xl w-full sm:w-96 bg-base-100">
         <div className="card-body p-6">
           <h1 className="text-3xl text-center font-bold mb-2">Hoş Geldin!</h1>
           <p className="text-base-content text-center mb-4">Inanılmaz bir deneyim yaşamak için lütfen giriş yap.</p>
