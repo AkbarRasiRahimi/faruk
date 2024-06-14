@@ -10,8 +10,7 @@ import Toast from "../../../components/toast";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const Application = () => {
-  const { userID, token, setIsLoading, isLoading, isLoggedIn } = useGlobalState();
-  const router = useRouter();
+  const { token, setIsLoading, isLoading, isLoggedIn } = useGlobalState();
 
   const [applications, setApplications] = useState([]);
   const [modalAppId, setModalAppId] = useState(null);
@@ -27,7 +26,6 @@ const Application = () => {
 
   useEffect(() => {
     fetchApplications();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
@@ -128,7 +126,7 @@ const Application = () => {
     <section className="w-screen flex justify-center pb-5 mt-72 sm:mt-20  bg-base-100">
       <div className="w-screen max-w-[1200px] px-1 sm:px-10">
         <h1 className="text-2xl font-bold mb-4">Kayıtlı Staj</h1>
-        {applications.length === 0 ? (
+        {applications.filter((app) => app.status === "accepted" || app.status === "rejected").length === 0 ? (
           <div className="flex flex-col items-center justify-center">
             <div className="text-center text-3xl text-gray-500 mt-10">Kayıtlı Staj bulunamadı.!!!</div>
             <p className="text-center text-red-500 mt-4"> Önemly : Başvuru yapmadan önce profilinizi oluşturun</p>

@@ -115,7 +115,7 @@ export default function Apply() {
                                   className="px-4 py-1 rounded-md bg-primary text-primary-content ">
                                   İlana Başvuranlar
                                 </button>
-                                <span className="badge badge-sm bg-warning indicator">
+                                <span className="badge badge-sm bg-warning indicator-item">
                                   {data.applications.filter((app) => app.status === "pending").length}
                                 </span>
                               </div>
