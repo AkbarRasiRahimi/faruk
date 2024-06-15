@@ -26,7 +26,6 @@ const Application = () => {
 
   const [toastMessage, setToastMessage] = useState("");
   const [reviews, setReviews] = useState([]);
- 
 
   useEffect(() => {
     fetchApplications();
@@ -130,7 +129,7 @@ const Application = () => {
     <section className="w-screen flex justify-center pb-5 mt-72 sm:mt-20  bg-base-100">
       <div className="w-screen max-w-[1200px] px-1 sm:px-10">
         <h1 className="text-2xl font-bold mb-4">Stajyerler</h1>
-        {applications.filter((application) => application.status === "accepted" || application.status === "rejected")
+        {applications.filter((application) => application.status === "accepted")
           .length === 0 ? (
           <div className="flex flex-col items-center justify-center">
             <div className="text-center text-3xl text-gray-500 mt-10">Kayıtlı Stajyer bulunamadı.!!!</div>
@@ -154,7 +153,7 @@ const Application = () => {
                   .filter((app) => app.status === "accepted")
                   .map((application, index) => (
                     <tr
-                      key={application._id}
+                      key={index}
                       className={`border-b border-base-300 text-left ${
                         application.status === "accepted" ? "bg-green-100" : "bg-orange-100"
                       }`}>
@@ -164,7 +163,10 @@ const Application = () => {
                       <td className="px-4 py-2 font-bold text-primary">{application.advert.title}</td>
                       <td className="px-4 py-2 h-2">
                         {reviews?.find(
-                          (item) => item.advert === application.advert._id && item.reviewer === "company"
+                          (item) =>
+                            item.advert === application.advert._id &&
+                            item.reviewer === "company" &&
+                            item.intern._id === application.intern._id
                         ) ? (
                           <div
                             className=" text-success hover:text-primary hover:cursor-pointer"
@@ -172,7 +174,10 @@ const Application = () => {
                               setModalShowCommentId(application._id);
                               // Get comment and rating from reviews
                               const review = reviews?.find(
-                                (item) => item.advert === application.advert._id && item.reviewer === "company"
+                                (item) =>
+                                  item.advert === application.advert._id &&
+                                  item.reviewer === "company" &&
+                                  item.intern._id === application.intern._id
                               );
                               setModalShowComment(review?.comment || "");
                               setModalShowCommentRating(review?.score || 0);
@@ -189,7 +194,10 @@ const Application = () => {
                       </td>
                       <td className="px-4 py-2 h-2">
                         {reviews?.find(
-                          (item) => item.advert === application.advert._id && item.reviewer === "intern"
+                          (item) =>
+                            item.advert === application.advert._id &&
+                            item.reviewer === "intern" &&
+                            item.intern._id === application.intern._id
                         ) ? (
                           <div
                             className=" text-success hover:text-primary hover:cursor-pointer"
@@ -197,7 +205,10 @@ const Application = () => {
                               setModalShowCommentIdIntern(application._id);
                               // Get comment and rating from reviews
                               const review = reviews?.find(
-                                (item) => item.advert === application.advert._id && item.reviewer === "intern"
+                                (item) =>
+                                  item.advert === application.advert._id &&
+                                  item.reviewer === "intern" &&
+                                  item.intern._id === application.intern._id
                               );
                               setModalShowCommentIntern(review?.comment || "");
                               setModalShowCommentRatingIntern(review?.score || 0);
@@ -255,7 +266,7 @@ const Application = () => {
                             <p className="capitalize font-bold text-xl  p-2">
                               Yıldız :{" "}
                               {Array.from({ length: modalShowCommentRating }, () => (
-                                <span className="text-yellow-500 mr-1" key={modalShowCommentRating}>
+                                <span className="text-yellow-500 mr-1" key={Math.random()}>
                                   ★
                                 </span>
                               ))}
@@ -279,7 +290,7 @@ const Application = () => {
                             <p className="capitalize font-bold text-xl  p-2">
                               Yıldız :{" "}
                               {Array.from({ length: modalShowCommentRatingIntern }, () => (
-                                <span className="text-yellow-500 mr-1" key={modalShowCommentRatingIntern}>
+                                <span className="text-yellow-500 mr-1" key={Math.random()}>
                                   ★
                                 </span>
                               ))}
