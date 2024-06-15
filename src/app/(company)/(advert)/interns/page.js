@@ -151,7 +151,7 @@ const Application = () => {
               </thead>
               <tbody>
                 {applications
-                  .filter((app) => app.status === "accepted" || app.status === "rejected")
+                  .filter((app) => app.status === "accepted")
                   .map((application, index) => (
                     <tr
                       key={application._id}
