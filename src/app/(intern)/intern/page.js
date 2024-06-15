@@ -149,28 +149,37 @@ const Application = () => {
                     <tr key={application._id} className="bg-base-100 border-b border-base-300 text-left">
                       <th className="px-4 py-2">{index + 1}</th>
                       <td className="px-4 py-2 font-bold text-primary">{application.advert.title}</td>
-                      <td
-                        className={`px-4 py-2 ${
-                          application.status === "pending"
-                            ? "text-gray-500"
-                            : application.status === "accepted"
-                            ? "text-green-500"
-                            : "text-red-500"
-                        }`}>
-                        {application.status === "pending"
-                          ? "Değerlendirmede"
-                          : application.status === "accepted"
-                          ? "Onaylandı"
-                          : "Red oldu"}
+                      <td className={`px-4 py-2 `}>
+                        {reviews?.find(
+                          (item) => item.advert === application.advert._id && item.reviewer === "company"
+                        ) && (
+                          <div
+                            className=" text-success hover:text-primary hover:cursor-pointer"
+                            onClick={() => {
+                              setModalShowCommentId(application._id);
+                              // Get comment and rating from reviews
+                              const review = reviews?.find(
+                                (item) => item.advert === application.advert._id && item.reviewer === "company"
+                              );
+                              setModalShowComment(review?.comment || "");
+                              setModalShowCommentRating(review?.score || 0);
+                            }}>
+                            Değerlendirildi
+                          </div>
+                        )}
                       </td>
                       <td className="px-4 py-2 h-2">
-                        {reviews?.find((item) => item.advert === application.advert._id) ? (
+                        {reviews?.find(
+                          (item) => item.advert === application.advert._id && item.reviewer === "intern"
+                        ) ? (
                           <div
                             className=" text-accent hover:text-primary hover:cursor-pointer"
                             onClick={() => {
                               setModalShowCommentId(application._id);
                               // Get comment and rating from reviews
-                              const review = reviews?.find((item) => item.advert === application.advert._id);
+                              const review = reviews?.find(
+                                (item) => item.advert === application.advert._id && item.reviewer === "intern"
+                              );
                               setModalShowComment(review?.comment || "");
                               setModalShowCommentRating(review?.score || 0);
                             }}>
