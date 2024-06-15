@@ -151,7 +151,10 @@ const Application = () => {
                       <td className="px-4 py-2 font-bold text-primary">{application.advert.title}</td>
                       <td className={`px-4 py-2 `}>
                         {reviews?.find(
-                          (item) => item.advert === application.advert._id && item.reviewer === "company"
+                          (item) =>
+                            item.advert === application.advert._id &&
+                            item.reviewer === "company" &&
+                            item.intern._id === application.intern._id
                         ) && (
                           <div
                             className=" text-success hover:text-primary hover:cursor-pointer"
@@ -159,7 +162,10 @@ const Application = () => {
                               setModalShowCommentId(application._id);
                               // Get comment and rating from reviews
                               const review = reviews?.find(
-                                (item) => item.advert === application.advert._id && item.reviewer === "company"
+                                (item) =>
+                                  item.advert === application.advert._id &&
+                                  item.reviewer === "company" &&
+                                  item.intern._id === application.intern._id
                               );
                               setModalShowComment(review?.comment || "");
                               setModalShowCommentRating(review?.score || 0);
@@ -170,7 +176,10 @@ const Application = () => {
                       </td>
                       <td className="px-4 py-2 h-2">
                         {reviews?.find(
-                          (item) => item.advert === application.advert._id && item.reviewer === "intern"
+                          (item) =>
+                            item.advert === application.advert._id &&
+                            item.reviewer === "intern" &&
+                            item.intern._id === application.intern._id
                         ) ? (
                           <div
                             className=" text-accent hover:text-primary hover:cursor-pointer"
@@ -178,7 +187,10 @@ const Application = () => {
                               setModalShowCommentId(application._id);
                               // Get comment and rating from reviews
                               const review = reviews?.find(
-                                (item) => item.advert === application.advert._id && item.reviewer === "intern"
+                                (item) =>
+                                  item.advert === application.advert._id &&
+                                  item.reviewer === "intern" &&
+                                  item.intern._id === application.intern._id
                               );
                               setModalShowComment(review?.comment || "");
                               setModalShowCommentRating(review?.score || 0);
